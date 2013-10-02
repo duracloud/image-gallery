@@ -1,0 +1,225 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
+    <meta charset="utf-8">
+    <title>DuraCloud - Image Gallery</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/tooltipster.css" rel="stylesheet" />
+    <link href="js/photobox/photobox.css" rel="stylesheet" />
+    <link href="css/duragallery.css" rel="stylesheet" />
+    <!--[if lt IE 9]><link rel="stylesheet" href="js/photobox/photobox.ie.css"><![endif]-->
+    <!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src='js/duragallery.js'></script>
+    <script src='js/xmlobjectifier.js'></script>
+    <script src='js/photobox/photobox.js'></script>
+    <script src='js/jquery.tooltipster.min.js'></script>
+</head>
+<body>
+
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-title-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">DuraGallery</a>
+        </div>
+        <div class="collapse navbar-collapse navbar-title-collapse">
+            <form class="navbar-form navbar-left form-horizontal">
+                <div class="form-group">
+                    <label for="space" class="col-lg-3 control-label">Space:</label>
+                    <div class="col-lg-9">
+                        <select class="form-control" id="space"></select>
+                    </div>
+                </div>
+            </form>
+            <form class="navbar-form navbar-left form-horizontal">
+                <div class="form-group">
+                    <label for="collection" class="col-lg-5 control-label">Collection:</label>
+                    <div class="col-lg-7">
+                        <select class="form-control" id="collection"></select>
+                    </div>
+                </div>
+            </form>
+            <div class="navbar-left">
+                <button type="button" id="btn-edit-coll" class="btn btn-default btn-primary navbar-btn tooltipster" title="Edit Collections">
+                    <span class="glyphicon glyphicon-edit"></span> Edit
+                </button>
+            </div>
+            <div class="navbar-right">
+                <a data-toggle="modal" href="#help-modal" class="btn btn-primary navbar-btn">Tips &amp; Tricks</a>
+            </div>
+        </div>
+    </nav>
+
+    <div id="gallery">
+        <h4>
+            Please choose an image collection from the above menus.   First choose a space and then choose a collection.
+        </h4>
+    </div>
+
+    <div class="modal fade" id="collections-modal" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title inline">Edit Collections</h4>
+                    <button type="button" id="coll-help" class="btn btn-default btn-sm" data-toggle="modal" data-target="#coll-help-modal">
+                        <span class="glyphicon glyphicon-question-sign"></span> Help
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="edit-space" class="col-lg-3 control-label">Space:</label>
+                            <div class="col-lg-7">
+                                <select class="form-control" id="edit-space"></select>
+                            </div>
+                            <button type="button" id="show-add-space" class="btn btn-default" title="Add space to space list">
+                                <span class="glyphicon glyphicon-plus"></span>
+                            </button>
+                            <button type="button" id="btn-remove-space" class="btn btn-default" title="Remove selected space from space list">
+                                <span class="glyphicon glyphicon-minus"></span>
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-collections" class="col-lg-3 control-label">Collections:</label>
+                            <div class="col-lg-9">
+                                <textarea class="form-control" id="edit-collections"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="coll-help-modal" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title inline">How to Edit Collections</h4>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        <li>A Collection respresents a group/collection of images within a DuraCloud Space.</li>
+                        <li>Images within a collection must be organized using the following structure:
+                            <ul>
+                                <li>thumbs (thumbnail images displayed in a grid, all viewable on the page)</li>
+                                <li>previews (larger versions of the thumbnail images, displayed when a thumbnail is clicked)</li>
+                                <li>highres (high resolution images that can be viewed by clicking on the link underneath the blownup preview images)</li>
+                            </ul>
+                        </li>
+                        <li>Example organization structure:
+                            <ul>
+                                <li>collection1/thumbs/img1.jpg</li>
+                                <li>collection1/thumbs/img2.jpg</li>
+                                <li>collection1/previews/img1.jpg</li>
+                                <li>collection1/previews/img2.jpg</li>
+                                <li>collection1/highres/img1.jpg</li>
+                                <li>collection1/highres/img2.jpg</li>
+                                <li>collection2/thumbs/img1.jpg</li>
+                                <li>collection2/thumbs/img2.jpg</li>
+                                <li>collection2/previews/img1.jpg</li>
+                                <li>collection2/previews/img2.jpg</li>
+                                <li>collection2/highres/img1.jpg</li>
+                                <li>collection2/highres/img2.jpg</li>
+                            </ul>
+                        </li>
+                        <li>A collection can have any name. The above 'collection1', 'collection2' are arbitrary examples.</li>
+                        <li>The images in a collection can have any name, but the corresponding images between thumbs, previews, and highres must have the same name.  The above 'img1.jpg', 'img2.jpg' are arbitrary examples.</li>
+                        <li>Spaces can be added by clicking the '+' button.  The space must already exist within DuraCloud.</li>
+                        <li>Spaces can be removed by selecting the space to remove from the dropdown menu and then clicking the '-' button.</li>
+                        <li>Adding/Removing collections from a space:
+                            <ul>
+                                <li>Select the space to add/remove collections to/from.</li>
+                                <li>The current collections will be displayed in the text area below the selected space.</li>
+                                <li>To add a collection, type in the name of the collection on a new line.</li>
+                                <li>To remove a collection, delete the line containing the name of the collection.</li>
+                            </ul>
+                        </li>
+                        <li>Edits are not saved until the 'Save' button is clicked.</li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="add-space-modal" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Add Space</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="txt-add-space" class="col-lg-3 control-label">Space:</label>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control" id="txt-add-space"></input>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                  <button type="button" class="btn btn-primary">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="help-modal" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">DuraCloud Image Gallery Tips &amp; Tricks</h4>
+                </div>
+                <div class="modal-body">
+                    <h4>A few tips and tricks about the DuraCloud image gallery:</h4>
+                    <ul>
+                        <li>When the page is loaded the available spaces and image collections are retrieved and loaded into the dropdown menu.  Selecting a space from the dropdown menu triggers the thumbnails in that space to be loaded.</li>
+                        <li>If this is your first time using the image gallery you will most likely not have any spaces or collections availble to select from the dropdown menus.  You can set up your available spaces and image collections by clicking the "Edit" button at the top of the screen.  There is a "(?) Help" button on the Edit window explaining how to setup your available spaces and image collections.</li>
+                        <li>The thumbnails are displayed in a grid with the name of each image underneath its thumbnail.</li>
+                        <li>Clicking a thumbnail will load a larger version of the image in the foreground.</li>
+                        <li>When viewing a blownup thumbnail:
+                            <ul>
+                                <li>The blownup image can be zoomed in and out by scrolling on it (mousewheel or trackpad).</li>
+                                <li>A zoomed in image can be panned around by moving the mouse around.</li>
+                                <li>Navigating to the next/previous image can be done by clicking the left or right arrows on either side of the screen or by pressing the left or right arrow keys on the keyboard.</li>
+                                <li>You can exit from viewing the blownup image display by clicking the 'X' at the top-right corner of the screen or by pressing the "Esc" or "x" key on the keyboard.</li>
+                                <li>Clicking the content ID link below the blown up image loads the high-res jpg in a new browser tab/window.</li>
+                            </ul>
+                        </li>
+                        <li>Most of the above functionality works the same on mobile devices.
+                            <ul>
+                                <li>Swipe left/right to move to previous/next image.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

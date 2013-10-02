@@ -1,0 +1,15 @@
+body { padding-top: 60px; }
+.inline {
+    display: inline-block;
+    padding: 0 5px;
+}
+.tooltipster-icon {
+    margin: 0 5px;
+}
+#gallery a {
+    display: inline-block;
+}
+
+#gallery div p {
+    word-wrap: break-word;
+}
